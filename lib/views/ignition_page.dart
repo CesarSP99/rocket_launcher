@@ -21,7 +21,7 @@ class _IgnitionPageState extends State<IgnitionPage> {
       print(SerialPort.lastError);
     }
     widget.port.write(Uint8List.fromList('1'.codeUnits));
-    while(cuenta > 0) {
+    while (cuenta > 0) {
       await Future.delayed(const Duration(seconds: 1));
       setState(() {
         cuenta--;
@@ -43,12 +43,11 @@ class _IgnitionPageState extends State<IgnitionPage> {
         child: cuenta == 0
             ? Lottie.network(
                 'https://assets5.lottiefiles.com/packages/lf20_yNhVL9.json')
-            : Card(
-                child: SizedBox(
-                  height: 40,
-                  width: 40,
-                  child: Text('$cuenta'),
-                ),
+            : Text(
+                '$cuenta',
+                textAlign: TextAlign.center,
+                style:
+                    const TextStyle(fontSize: 150, fontWeight: FontWeight.bold),
               ),
       ),
     );
