@@ -16,20 +16,24 @@ class IgnitionPage extends StatefulWidget {
 class _IgnitionPageState extends State<IgnitionPage> {
   int cuenta = 5;
 
-  @override
-  void initState() async {
-    super.initState();
-    widget.port.write(Uint8List.fromList('0'.codeUnits));
-    for (int i = 0; i < cuenta; i++) {
+  void cuentaRegresiva() async {
+    if (widget.port.openReadWrite() != true) {
+      print(SerialPort.lastError);
+    }
+    widget.port.write(Uint8List.fromList('1'.codeUnits));
+    while(cuenta > 0) {
       await Future.delayed(const Duration(seconds: 1));
       setState(() {
         cuenta--;
       });
     }
-    if (widget.port.openReadWrite() != true) {
-      print(SerialPort.lastError);
-    }
-    widget.port.write(Uint8List.fromList('1'.codeUnits));
+    widget.port.write(Uint8List.fromList('0'.codeUnits));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    cuentaRegresiva();
   }
 
   @override

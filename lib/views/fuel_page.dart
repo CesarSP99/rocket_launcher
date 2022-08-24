@@ -4,6 +4,8 @@ import 'dart:async';
 
 import 'package:lottie/lottie.dart';
 
+import 'ignition_page.dart';
+
 class FuelPage extends StatefulWidget {
   final SerialPort port;
 
@@ -78,7 +80,7 @@ class _FuelPageState extends State<FuelPage> {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => FuelPage(
+                      builder: (context) => IgnitionPage(
                         port: widget.port,
                       ),
                     ),
