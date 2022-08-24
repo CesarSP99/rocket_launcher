@@ -1,5 +1,5 @@
 name: rocket_launcher
-description: A new Flutter project.
+description: Una interfaz para comunicar con un Arduino y coordinar el lanzamiento de un cohete.
 
 publish_to: 'none'
 
@@ -15,6 +15,8 @@ dependencies:
   lottie: ^1.4.1
   flutter_libserialport: ^0.2.3
   cupertino_icons: ^1.0.2
+  gauges: ^1.0.0
+  percent_indicator: ^4.2.2
 
 dev_dependencies:
   flutter_test:
