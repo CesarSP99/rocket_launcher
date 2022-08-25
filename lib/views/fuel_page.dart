@@ -45,8 +45,8 @@ class _FuelPageState extends State<FuelPage> {
                           onLongPressEnd: (_) {
                             // Activate Launch button
                           },
-                          child: Lottie.network(
-                            'https://assets3.lottiefiles.com/packages/lf20_rdvdou18.json',
+                          child: Lottie.asset(
+                            'assets/lottie/manguera.json',
                             height: 200,
                           )
                           // ElevatedButton(
@@ -61,8 +61,8 @@ class _FuelPageState extends State<FuelPage> {
                   ),
                   Flexible(
                     flex: 1,
-                    child: Lottie.network(
-                      'https://assets7.lottiefiles.com/packages/lf20_xiussssy.json',
+                    child: Lottie.asset(
+                      'assets/lottie/cohete1.json',
                       height: 400,
                     ),
                   ),

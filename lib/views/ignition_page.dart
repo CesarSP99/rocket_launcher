@@ -57,8 +57,7 @@ class _IgnitionPageState extends State<IgnitionPage> {
     return Scaffold(
       body: Center(
         child: cuenta == 0
-            ? Lottie.network(
-                'https://assets5.lottiefiles.com/packages/lf20_yNhVL9.json')
+            ? Lottie.asset('assets/lottie/cohete2.json')
             : Text(
                 '$cuenta',
                 textAlign: TextAlign.center,
