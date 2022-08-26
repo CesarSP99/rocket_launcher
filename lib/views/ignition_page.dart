@@ -1,9 +1,9 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_libserialport/flutter_libserialport.dart';
 import 'package:lottie/lottie.dart';
+import 'package:rocket_launcher/views/home_page.dart';
 
 class IgnitionPage extends StatefulWidget {
   final SerialPort port;
@@ -66,6 +66,19 @@ class _IgnitionPageState extends State<IgnitionPage> {
                     const TextStyle(fontSize: 150, fontWeight: FontWeight.bold),
               ),
       ),
+      floatingActionButton: (cuenta == 0)
+          ? FloatingActionButton(
+              child: const Icon(Icons.refresh),
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => const HomePage(),
+                  ),
+                );
+                widget.port.close();
+              },
+            )
+          : null,
     );
   }
 }
