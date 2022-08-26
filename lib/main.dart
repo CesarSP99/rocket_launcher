@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rocket_launcher/utils/custom_colors.dart';
 import 'views/home_page.dart';
 
 void main() {
@@ -13,9 +14,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Rocket Launcher',
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: CustomColors.greenUPSA,
       ),
       home: const HomePage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
