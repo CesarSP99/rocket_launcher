@@ -55,6 +55,7 @@ class _IgnitionPageState extends State<IgnitionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: (cuenta == 0) ? Colors.blue : null,
       body: Center(
         child: cuenta == 0
             ? Lottie.asset('assets/lottie/cohete2.json')
