@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_libserialport/flutter_libserialport.dart';
 import 'package:lottie/lottie.dart';
+import 'package:rocket_launcher/utils/custom_colors.dart';
 import 'package:rocket_launcher/views/home_page.dart';
 
 class IgnitionPage extends StatefulWidget {
@@ -15,6 +16,15 @@ class IgnitionPage extends StatefulWidget {
 }
 
 class _IgnitionPageState extends State<IgnitionPage> {
+  List colors = [
+    Colors.blue,
+    Colors.red,
+    Colors.yellow,
+    Colors.green,
+    Colors.purple,
+    Colors.orange
+  ];
+
   int cuenta = 5;
 
   void cuentaRegresiva() async {
@@ -55,7 +65,7 @@ class _IgnitionPageState extends State<IgnitionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: (cuenta == 0) ? Colors.blue : null,
+      backgroundColor: colors[cuenta],
       body: Center(
         child: cuenta == 0
             ? Lottie.asset('assets/lottie/cohete2.json')
@@ -63,11 +73,12 @@ class _IgnitionPageState extends State<IgnitionPage> {
                 '$cuenta',
                 textAlign: TextAlign.center,
                 style:
-                    const TextStyle(fontSize: 150, fontWeight: FontWeight.bold),
+                    const TextStyle(fontSize: 300, fontWeight: FontWeight.bold),
               ),
       ),
       floatingActionButton: (cuenta == 0)
           ? FloatingActionButton(
+              backgroundColor: CustomColors.greenUPSA,
               child: const Icon(Icons.refresh),
               onPressed: () {
                 Navigator.of(context).pushReplacement(
