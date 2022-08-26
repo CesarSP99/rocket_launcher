@@ -14,8 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Rocket Launcher',
       theme: ThemeData(
-        primarySwatch: CustomColors.greenUPSA,
-      ),
+          primarySwatch: CustomColors.greenUPSA, fontFamily: 'Montserrat'),
       home: const HomePage(),
       debugShowCheckedModeBanner: false,
     );

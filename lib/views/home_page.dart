@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
             ),
             SizedBox(
               height: 40,
-              width: 120,
+              width: 130,
               child: ElevatedButton(
                 // style: ElevatedButton.styleFrom(
                 //   primary: const Color(0xff89c970),
