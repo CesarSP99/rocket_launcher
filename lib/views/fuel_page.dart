@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_libserialport/flutter_libserialport.dart';
+import 'package:gauges/gauges.dart';
 import 'dart:async';
 
 import 'package:lottie/lottie.dart';
-
 import 'ignition_page.dart';
 
 class FuelPage extends StatefulWidget {
@@ -16,6 +16,32 @@ class FuelPage extends StatefulWidget {
 }
 
 class _FuelPageState extends State<FuelPage> {
+  bool _isPressed = false;
+  double _fuelPointer = -100;
+  bool _isFull = false;
+
+  Future fuelRocket() async {
+    do {
+      if (_fuelPointer < 100) {
+        await Future.delayed(const Duration(milliseconds: 25));
+        setState(() {
+          _fuelPointer += 1;
+        });
+      } else {
+        setState(() {
+          _isFull = true;
+        });
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => IgnitionPage(
+              port: widget.port,
+            ),
+          ),
+        );
+      }
+    } while (_isPressed && !_isFull);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +53,13 @@ class _FuelPageState extends State<FuelPage> {
       body: Column(
         children: [
           const FittedBox(
-            child: Text("Lanzador de Cohetes UPSA"),
+            child: Padding(
+              padding: EdgeInsets.only(top: 20),
+              child: Text(
+                "Lanzador de Cohetes UPSA",
+                style: TextStyle(fontSize: 30),
+              ),
+            ),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -39,58 +71,123 @@ class _FuelPageState extends State<FuelPage> {
                     flex: 1,
                     child: Center(
                       child: GestureDetector(
-                          onLongPress: () {
-                            // Start Fueling Animation
+                          onLongPressStart: (_) {
+                            setState(() {
+                              _isPressed = true;
+                            });
+                            fuelRocket();
                           },
                           onLongPressEnd: (_) {
-                            // Activate Launch button
+                            setState(() {
+                              _isPressed = false;
+                            });
                           },
                           child: Lottie.asset(
                             'assets/lottie/manguera.json',
-                            height: 200,
-                          )
-                          // ElevatedButton(
-                          //   onPressed: () => {},
-                          //   style: ElevatedButton.styleFrom(
-                          //     shape: RoundedRectangleBorder(),
-                          //   ),
-                          //   child: const Icon(Icons.local_gas_station),
-                          // ),
-                          ),
+                            width: 180,
+                          )),
                     ),
                   ),
                   Flexible(
                     flex: 1,
                     child: Lottie.asset(
                       'assets/lottie/cohete1.json',
-                      height: 400,
+                      width: 550,
                     ),
                   ),
+                  Flexible(
+                      flex: 1,
+                      child: Center(
+                        child: ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 250),
+                            child: RadialGauge(
+                              axes: [
+                                RadialGaugeAxis(
+                                    color: Colors.transparent,
+                                    minValue: -100,
+                                    maxValue: 100,
+                                    minAngle: -150,
+                                    maxAngle: 150,
+                                    radius: 0.6,
+                                    width: 0.2,
+                                    segments: [
+                                      const RadialGaugeSegment(
+                                        minValue: 0,
+                                        maxValue: 20,
+                                        minAngle: -150,
+                                        maxAngle: -90,
+                                        color: Colors.red,
+                                      ),
+                                      const RadialGaugeSegment(
+                                        minValue: 20,
+                                        maxValue: 40,
+                                        minAngle: -90,
+                                        maxAngle: -30,
+                                        color: Colors.orange,
+                                      ),
+                                      const RadialGaugeSegment(
+                                        minValue: 40,
+                                        maxValue: 60,
+                                        minAngle: -30,
+                                        maxAngle: 30,
+                                        color: Colors.yellow,
+                                      ),
+                                      const RadialGaugeSegment(
+                                        minValue: 60,
+                                        maxValue: 80,
+                                        minAngle: 30,
+                                        maxAngle: 90,
+                                        color: Colors.lightGreen,
+                                      ),
+                                      const RadialGaugeSegment(
+                                        minValue: 80,
+                                        maxValue: 100,
+                                        minAngle: 90,
+                                        maxAngle: 150,
+                                        color: Colors.green,
+                                      ),
+                                    ],
+                                    pointers: [
+                                      RadialNeedlePointer(
+                                          value: _fuelPointer,
+                                          thicknessStart: 20,
+                                          thicknessEnd: 0,
+                                          length: 0.6,
+                                          knobRadiusAbsolute: 10,
+                                          gradient: const LinearGradient(
+                                              colors: [
+                                                Colors.black,
+                                                Colors.grey
+                                              ]))
+                                    ]),
+                              ],
+                            )),
+                      ))
                 ],
               ),
               const SizedBox(
                 height: 30,
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.red,
-                  shape: const CircleBorder(),
-                  padding: const EdgeInsets.all(20),
-                ),
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => IgnitionPage(
-                        port: widget.port,
-                      ),
-                    ),
-                  );
-                },
-                child: const Icon(
-                  Icons.rocket_launch,
-                  size: 50,
-                ),
-              ),
+              // ElevatedButton(
+              //   style: ElevatedButton.styleFrom(
+              //     primary: Colors.red,
+              //     shape: const CircleBorder(),
+              //     padding: const EdgeInsets.all(20),
+              //   ),
+              //   onPressed: () {
+              //     Navigator.of(context).push(
+              //       MaterialPageRoute(
+              //         builder: (context) => IgnitionPage(
+              //           port: widget.port,
+              //         ),
+              //       ),
+              //     );
+              //   },
+              //   child: const Icon(
+              //     Icons.rocket_launch,
+              //     size: 50,
+              //   ),
+              // ),
             ],
           ),
         ],
