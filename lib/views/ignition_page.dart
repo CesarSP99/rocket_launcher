@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_libserialport/flutter_libserialport.dart';
 import 'package:lottie/lottie.dart';
@@ -26,6 +27,7 @@ class _IgnitionPageState extends State<IgnitionPage> {
   ];
 
   int cuenta = 5;
+  final player = AudioPlayer();
 
   void cuentaRegresiva() async {
     // Process.run('mode', [widget.port.name!, 'BAUD=9600', 'PARITY=n', 'DATA=8'],
@@ -42,12 +44,13 @@ class _IgnitionPageState extends State<IgnitionPage> {
     widget.port.config = config;
 
     while (cuenta > 0) {
+      player.play(AssetSource('assets/sounds/tick.wav'));
       await Future.delayed(const Duration(seconds: 1));
       setState(() {
         cuenta--;
       });
     }
-
+    player.play(AssetSource('assets/sounds/launch.mp3'));
     widget.port.write(Uint8List.fromList('1'.codeUnits));
     //Process.run('echo', ['1', '>', widget.port.name!], runInShell: true);
     await Future.delayed(const Duration(seconds: 1));
